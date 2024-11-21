@@ -1,8 +1,12 @@
+use server::Server;
+use http::method::Method;
+use http::request::Request;
+
 fn main() {
     // let get = Method::GET;
     // let delete = Method::DELETE;
 
-    let server = server::Server::new("127.0.0.1:8000".to_string());
+    let server = Server::new("127.0.0.1:8000".to_string());
     server.run();
 }
 
@@ -24,16 +28,17 @@ mod server {
 
 mod http {
 
-    mod request {
-        struct Request {
+    pub mod request {
+        use super::method::Method;
+        pub struct Request {
             path: String,
             query_string: Option<String>,
-            method: super::method::Method,
+            method: Method,
         }
     }
+    pub mod method {
     // in enum things are takes as index of 0
     // like 0- GET, 1- POST
-    mod method {
         pub enum Method {
             GET,
             POST,
